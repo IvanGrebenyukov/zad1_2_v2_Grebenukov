@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/incomeListFragment">
+
+    <fragment
+        android:id="@+id/addIncomeFragment"
+        android:name="com.example.zad1_2_v2_grebenukov.AddIncomeFragment"
+        android:label="Add Income"
+        tools:layout="@layout/fragment_add_income" />
+    <fragment
+        android:id="@+id/incomeListFragment"
+        android:name="com.example.zad1_2_v2_grebenukov.IncomeListFragment"
+        android:label="Income List"
+        tools:layout="@layout/fragment_income_list">
+        <action
+            android:id="@+id/action_incomeListFragment_to_addIncomeFragment"
+            app:destination="@id/addIncomeFragment" />
+    </fragment>
+</navigation>
