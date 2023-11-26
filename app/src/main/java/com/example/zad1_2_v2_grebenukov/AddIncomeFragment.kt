@@ -8,16 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
-import androidx.room.Room
+
 import com.example.zad1_2_v2_grebenukov.Database.Income
 import com.example.zad1_2_v2_grebenukov.Database.IncomeDao
 import com.example.zad1_2_v2_grebenukov.Database.IncomeDatabase
 import com.example.zad1_2_v2_grebenukov.databinding.FragmentAddIncomeBinding
-import com.example.zad1_2_v2_grebenukov.databinding.FragmentIncomeListBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -51,7 +47,7 @@ class AddIncomeFragment : Fragment() {
                 date = selectedDate,
                 description = description
             )
-            Toast.makeText(requireContext(), "Неверное имя пользователя или пароль.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "fwfwaf", Toast.LENGTH_SHORT).show()
             addIncomeToDatabase(newIncome)
             Toast.makeText(requireContext(), "Нffffffffffffffffffff", Toast.LENGTH_LONG).show()
         }
