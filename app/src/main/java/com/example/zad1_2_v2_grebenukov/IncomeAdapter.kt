@@ -4,22 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zad1_2_v2_grebenukov.Database.Income
 
-class IncomeAdapter(private val incomes: List<Income>, private val onItemClick: (Income) -> Unit)
-    :RecyclerView.Adapter<IncomeAdapter.IncomeViewHolder>() {
-    class IncomeViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val textViewAmount: TextView = itemView.findViewById(R.id.tvAmount)
-        private val textViewDescription: TextView = itemView.findViewById(R.id.tvDescription)
-        private val textViewDate: TextView = itemView.findViewById(R.id.tvDate)
-        fun bind(income: Income){
-            textViewAmount.text = income.amount.toString()
-            textViewDescription.text = income.description
-            textViewDate.text = income.date
-        }
-
-    }
+class IncomeAdapter(
+    private val incomes: List<Income>,
+    private val onEditClickListener: (Income) -> Unit,
+    private val onDeleteClickListener: (Income) -> Unit
+) : RecyclerView.Adapter<IncomeAdapter.IncomeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IncomeViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -27,13 +20,27 @@ class IncomeAdapter(private val incomes: List<Income>, private val onItemClick: 
         return IncomeViewHolder(view)
     }
 
+    override fun onBindViewHolder(holder: IncomeViewHolder, position: Int) {
+        val income = incomes[position]
+        holder.bind(income)
+        holder.itemView.findViewById<AppCompatButton>(R.id.buttonEdit).setOnClickListener {
+            onEditClickListener(income)
+        }
+        holder.itemView.findViewById<AppCompatButton>(R.id.buttonDelete).setOnClickListener {
+            onDeleteClickListener(income)
+        }
+    }
+
     override fun getItemCount(): Int {
         return incomes.size
     }
 
-    override fun onBindViewHolder(holder: IncomeViewHolder, position: Int) {
-        val income = incomes[position]
-        holder.bind(income)
-        holder.itemView.setOnClickListener{onItemClick.invoke(income)}
+    class IncomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(income: Income) {
+            itemView.findViewById<TextView>(R.id.tvAmount).text = income.amount.toString()
+            itemView.findViewById<TextView>(R.id.tvDescription).text = income.description
+            itemView.findViewById<TextView>(R.id.tvDate).text = income.date
+            itemView.findViewById<AppCompatButton>(R.id.buttonEdit)
+        }
     }
 }

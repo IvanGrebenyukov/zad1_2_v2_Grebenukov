@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Zad1_2_v2_Grebenukov</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Список доходов</string>
+    <string name="amount">Количество</string>
+    <string name="description">Описание</string>
+    <string name="select_date">Выбрать дату</string>
+    <string name="add_income">Добавить доход</string>
+    <string name="edit_income">Отредактировать доход</string>
+    <string name="income_list">Список доходов</string>
 </resources>

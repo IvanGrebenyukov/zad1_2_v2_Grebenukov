@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/incomeListFragment"
-        android:title="Income List"
+        android:title="@string/income_list"
         android:icon="@drawable/ic_income_list" />
     <item
         android:id="@+id/addIncomeFragment"
-        android:title="Income Add"
+        android:title="@string/add_income"
         android:icon="@drawable/ic_income_add" />
 </menu>
