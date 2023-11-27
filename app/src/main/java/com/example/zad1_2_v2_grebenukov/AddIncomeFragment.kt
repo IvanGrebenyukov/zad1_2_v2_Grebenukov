@@ -8,50 +8,43 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 
 import com.example.zad1_2_v2_grebenukov.Database.Income
 import com.example.zad1_2_v2_grebenukov.Database.IncomeDao
 import com.example.zad1_2_v2_grebenukov.Database.IncomeDatabase
+import com.example.zad1_2_v2_grebenukov.Database.IncomeViewModel
 import com.example.zad1_2_v2_grebenukov.databinding.FragmentAddIncomeBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+//private lateinit var incomeDao: IncomeDao
+//private lateinit var incomeDatabase: IncomeDatabase
+
 
 class AddIncomeFragment : Fragment() {
-    private lateinit var incomeDao: IncomeDao
     private lateinit var selectedDate: String
     private lateinit var binding: FragmentAddIncomeBinding
-    private lateinit var incomeDatabase: IncomeDatabase
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddIncomeBinding.inflate(inflater, container, false)
-        val calendar = Calendar.getInstance()
-        val currentDate = DateFormat.getDateInstance().format(calendar.time)
-//        incomeDatabase = Room.databaseBuilder(requireContext(), IncomeDatabase::class.java, "income").build()
         binding.buttonSelectDate.setOnClickListener {
             showDatePicker()
         }
         binding.buttonAdd.setOnClickListener {
-            val amount = binding.editTextAmount.text.toString().toDouble()
-            val description = binding.editTextDescription.text.toString()
-            binding.date.text = selectedDate
-            binding.amount.text = amount.toString()
-//
-            val newIncome = Income(
-                amount = amount,
-                date = selectedDate,
-                description = description
-            )
-            Toast.makeText(requireContext(), "fwfwaf", Toast.LENGTH_SHORT).show()
-            addIncomeToDatabase(newIncome)
-            Toast.makeText(requireContext(), "Нffffffffffffffffffff", Toast.LENGTH_LONG).show()
+            addIncomeToDatabase()
         }
-
         return binding.root
     }
     private fun showDatePicker() {
@@ -65,18 +58,24 @@ class AddIncomeFragment : Fragment() {
             chosenDateCalendar.set(year, month, dayOfMonth)
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             selectedDate = sdf.format(chosenDateCalendar.time)
+            binding.date.text = "-> ${selectedDate}"
         }, year, month, dayOfMonth)
 
         datePickerDialog.show()
     }
-    private fun addIncomeToDatabase(income: Income) {
-        val database = IncomeDatabase.getDatabase(requireContext())
-        incomeDao = database.incomeDao()
-
-//        CoroutineScope(Dispatchers.IO).launch {
-//            incomeDao.insertIncome(income)
-//        }
-
+    private fun addIncomeToDatabase() {
+        val amount = binding.editTextAmount.text.toString().toDouble()
+        val description = binding.editTextDescription.text.toString()
+        val currentDate = selectedDate
+        val newIncome = Income(
+            amount = amount,
+            date = currentDate,
+            description = description
+        )
+        val incomeDao = IncomeDatabase.getDatabase(requireContext()).incomeDao()
+        CoroutineScope(Dispatchers.IO).launch {
+            incomeDao.insertIncome(newIncome)
+        }
 
     }
 
