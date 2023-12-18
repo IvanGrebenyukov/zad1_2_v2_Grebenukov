@@ -28,8 +28,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-//private lateinit var incomeDao: IncomeDao
-//private lateinit var incomeDatabase: IncomeDatabase
 
 
 class AddIncomeFragment : Fragment() {
@@ -43,7 +41,7 @@ class AddIncomeFragment : Fragment() {
     ): View? {
         binding = FragmentAddIncomeBinding.inflate(inflater, container, false)
 
-
+        selectedDate = ""
         val database = IncomeDatabase.getDatabase(requireContext())
         incomeDao = database.incomeDao()
         incomeId = arguments?.getLong("incomeId")
@@ -98,35 +96,36 @@ class AddIncomeFragment : Fragment() {
         datePickerDialog.show()
     }
     private fun addIncomeToDatabase() {
-        val amount = binding.editTextAmount.text.toString().toDouble()
-        val description = binding.editTextDescription.text.toString()
-        val currentDate = selectedDate
-        if(amount != null && amount > 0 && description.isNotBlank() && currentDate != null){
-            val newIncome = Income(
-                amount = amount,
-                date = currentDate,
-                description = description
-            )
-            val incomeDao = IncomeDatabase.getDatabase(requireContext()).incomeDao()
-            CoroutineScope(Dispatchers.IO).launch {
-                incomeDao.insertIncome(newIncome)
+        binding.apply {
+            if(editTextAmount.text.isNotBlank() && editTextDescription.text.isNotBlank() && selectedDate != ""){
+                val amount = binding.editTextAmount.text.toString().toDouble()
+                val description = binding.editTextDescription.text.toString()
+                val currentDate = selectedDate
+                val newIncome = Income(
+                    amount = amount,
+                    date = currentDate,
+                    description = description
+                )
+                val incomeDao = IncomeDatabase.getDatabase(requireContext()).incomeDao()
+                CoroutineScope(Dispatchers.IO).launch {
+                    incomeDao.insertIncome(newIncome)
+                }
+
+            }
+            else{
+                Toast.makeText(requireContext(), "Заполните все поля", Toast.LENGTH_SHORT).show()
             }
         }
-        else{
-            Toast.makeText(requireContext(), "Заполните все поля", Toast.LENGTH_SHORT)
-        }
-
-
     }
     private fun updateIncome(amount: Double?, description: String) {
-        if (amount != null && amount > 0 && description.isNotBlank() && selectedDate != null && incomeId != null) {
+        if (amount != null && amount > 0 && description.isNotBlank() && selectedDate != "" && incomeId != null) {
             val updatedIncome = Income(incomeId!!, amount, selectedDate, description)
             lifecycleScope.launch(Dispatchers.IO) {
                 incomeDao.updateIncome(updatedIncome)
             }
             findNavController().popBackStack(R.id.incomeListFragment, false)
         } else {
-           Toast.makeText(requireContext(), "Заполните все поля", Toast.LENGTH_SHORT)
+           Toast.makeText(requireContext(), "Заполните все поля", Toast.LENGTH_SHORT).show()
         }
     }
 

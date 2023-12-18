@@ -40,9 +40,7 @@ class IncomeListFragment : Fragment() {
 
         loadIncomes()
 
-//        binding.buttonNewIncome.setOnClickListener {
-//            findNavController().navigate(R.id.action_incomeListFragment_to_addIncomeFragment)
-//        }
+
         return binding.root
     }
 

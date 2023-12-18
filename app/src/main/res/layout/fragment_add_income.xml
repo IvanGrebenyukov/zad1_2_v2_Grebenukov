@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <androidx.appcompat.widget.AppCompatButton
+            android:layout_marginLeft="5dp"
             android:id="@+id/buttonSelectDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginLeft="5dp"
         android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,6 +50,7 @@
         android:background="@drawable/buttons"
         android:text="@string/add_income"/>
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginLeft="5dp"
         android:id="@+id/buttonEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,10 +60,4 @@
         android:background="@drawable/buttons"
         android:visibility="invisible"
         android:text="@string/edit_income"/>
-
-
-
-
-
-
 </LinearLayout>

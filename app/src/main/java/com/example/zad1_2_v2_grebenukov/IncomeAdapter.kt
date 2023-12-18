@@ -37,9 +37,9 @@ class IncomeAdapter(
 
     class IncomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(income: Income) {
-            itemView.findViewById<TextView>(R.id.tvAmount).text = income.amount.toString()
-            itemView.findViewById<TextView>(R.id.tvDescription).text = income.description
-            itemView.findViewById<TextView>(R.id.tvDate).text = income.date
+            itemView.findViewById<TextView>(R.id.tvAmount).text = "Сумма: " + income.amount.toString()
+            itemView.findViewById<TextView>(R.id.tvDescription).text = "Название: " +  income.description
+            itemView.findViewById<TextView>(R.id.tvDate).text = "Дата: " +  income.date
             itemView.findViewById<AppCompatButton>(R.id.buttonEdit)
         }
     }
